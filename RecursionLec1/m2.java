@@ -1,6 +1,6 @@
 package RecursionLec1;
 
-public class m2 {
+public class printDec {
     static void printDecreasing(int n){
         if(n==1){
             System.out.println(1);
