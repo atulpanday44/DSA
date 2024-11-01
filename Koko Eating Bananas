@@ -1,0 +1,32 @@
+import java.util.Arrays;
+
+class Solution {
+
+    public long timeFnc(int mid, int[] piles) {
+        long sum = 0; // Use long to prevent overflow
+        for (int pile : piles) {
+            sum += (pile / mid) + ((pile % mid) != 0 ? 1 : 0);
+        }
+        return sum;
+    }
+
+    public int minEatingSpeed(int[] piles, int h) {
+        int low = 1; // Minimum eating speed cannot be less than 1
+        int high = Arrays.stream(piles).max().orElseThrow();
+        int ans = high; // Start with the maximum possible speed
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            long time = timeFnc(mid, piles); // Use long here
+
+            if (time <= h) {
+                ans = mid; // mid is a possible answer
+                high = mid - 1; // Try for a smaller speed
+            } else {
+                low = mid + 1; // Increase the speed
+            }
+        }
+        
+        return ans;
+    }
+}
