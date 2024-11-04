@@ -1,0 +1,28 @@
+public class Solution {
+    public int smallestDivisor(int[] nums, int threshold) {
+        
+        int high = Arrays.stream(nums).max().orElseThrow();
+        int low = 1;
+        int result = high;
+        
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (isDivisible(nums, mid, threshold)) {
+                result = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        
+        return result;
+    }
+    
+    private boolean isDivisible(int[] nums, int divisor, int threshold) {
+        int sum = 0;
+        for (int num : nums) {
+            sum += Math.ceil((double) num / divisor);
+        }
+        return sum <= threshold;
+    }
+}
