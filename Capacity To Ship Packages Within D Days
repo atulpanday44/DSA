@@ -1,0 +1,32 @@
+class Solution {
+    public int findDays(int[] weights, int cap) {
+        int days = 1; 
+        int load = 0;
+        for (int weight : weights) {
+            if (load + weight > cap) {
+                days++; 
+                load = weight; 
+            } else {
+                load += weight;
+            }
+        }
+        return days;
+    }
+    public int shipWithinDays(int[] weights, int d) {
+        int maxi = Integer.MIN_VALUE, sum = 0;
+        for (int weight : weights) {
+            sum += weight;
+            maxi = Math.max(maxi, weight);
+        }
+        int left = maxi, right = sum;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (findDays(weights, mid) <= d) {
+                right = mid; 
+            } else {
+                left = mid + 1;
+            }
+        }  
+        return left;
+    }
+}
