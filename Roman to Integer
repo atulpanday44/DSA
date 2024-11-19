@@ -1,0 +1,23 @@
+class Solution {
+    public int romanToInt(String s) {
+        int[] romanMap = new int[256];
+        romanMap['I'] = 1;
+        romanMap['V'] = 5;
+        romanMap['X'] = 10;
+        romanMap['L'] = 50;
+        romanMap['C'] = 100;
+        romanMap['D'] = 500;
+        romanMap['M'] = 1000;
+        
+        int total = 0;
+          for (int i = 0; i < s.length(); i++) {
+            if (i + 1 < s.length() && romanMap[s.charAt(i)] < romanMap[s.charAt(i + 1)]) {
+                total -= romanMap[s.charAt(i)];
+            } else {
+                total += romanMap[s.charAt(i)];
+            }
+        }
+        
+        return total;
+    }
+}
