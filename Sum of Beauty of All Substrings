@@ -1,0 +1,27 @@
+class Solution {
+    public int beautySum(String s) {
+        int n = s.length();
+        int totalBeautySum = 0;
+        
+        for (int i = 0; i < n; i++) {
+            Map<Character, Integer> freqMap = new HashMap<>();
+            int maxFreq = 0;
+            int minFreq = Integer.MAX_VALUE;
+
+            for (int j = i; j < n; j++) {
+                
+                char currentChar = s.charAt(j);
+                freqMap.put(currentChar, freqMap.getOrDefault(currentChar, 0) + 1);
+
+                maxFreq = Math.max(maxFreq, freqMap.get(currentChar));
+                minFreq = Integer.MAX_VALUE; 
+                for (int freq : freqMap.values()) {
+                    minFreq = Math.min(minFreq, freq);
+                }
+                totalBeautySum += (maxFreq - minFreq);
+            }
+        }
+
+        return totalBeautySum;
+    }
+}
