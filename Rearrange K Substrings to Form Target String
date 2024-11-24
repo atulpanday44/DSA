@@ -1,0 +1,19 @@
+class Solution {
+    public boolean isPossibleToRearrange(String s, String t, int k) {
+        int n = s.length();
+        int substringLength = n / k; 
+    
+        List<String> sSubstrings = new ArrayList<>();
+        List<String> tSubstrings = new ArrayList<>();
+        
+        for (int i = 0; i < n; i += substringLength) {
+            sSubstrings.add(s.substring(i, i + substringLength));
+            tSubstrings.add(t.substring(i, i + substringLength));
+        }
+        
+        Collections.sort(sSubstrings);
+        Collections.sort(tSubstrings);
+        
+        return sSubstrings.equals(tSubstrings);
+    }
+}
