@@ -1,0 +1,12 @@
+class Solution {
+    public int smallestNumber(int n) {
+        int bitLength = Integer.toBinaryString(n).length();
+        int allSetBits = (1 << bitLength) - 1;
+
+        if (allSetBits < n) {
+            allSetBits = (1 << (bitLength + 1)) - 1;
+        }
+
+        return allSetBits;
+    }
+}
