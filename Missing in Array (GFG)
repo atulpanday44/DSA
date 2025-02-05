@@ -1,0 +1,12 @@
+class Solution {
+    int missingNumber(int arr[]) {
+        int xor =0;
+        for(int j : arr){
+            xor = xor ^ j;
+        }
+        for(int i=1; i<=arr.length+1; i++){
+            xor = xor ^ i;
+        }
+        return xor;
+    }
+}
