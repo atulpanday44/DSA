@@ -1,0 +1,34 @@
+class Solution {
+    public int findSum(int number){
+        int sum = 0;
+        while (number != 0) {
+            sum += number % 10;
+            number /= 10;
+        }
+        return sum;
+    }
+    
+    public int maximumSum(int[] nums) {
+        HashMap<Integer, List<Integer>> map = new HashMap<>();
+        
+        for (int num : nums) {
+            int digitSum = findSum(num);
+            if (!map.containsKey(digitSum)) {
+                map.put(digitSum, new ArrayList<>());
+            }
+            map.get(digitSum).add(num);
+        }
+
+        int maxSum = -1;
+        
+        for (List<Integer> group : map.values()) {
+            if (group.size() > 1) {
+                group.sort((a, b) -> b - a);
+                int pairSum = group.get(0) + group.get(1);
+                maxSum = Math.max(maxSum, pairSum);
+            }
+        }
+
+        return maxSum;
+    }
+}
