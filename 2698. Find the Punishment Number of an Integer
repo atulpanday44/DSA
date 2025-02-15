@@ -1,0 +1,29 @@
+class Solution {
+    public int punishmentNumber(int n) {
+        int punishmentNumber = 0;
+        for (int i = 1; i <= n; i++) {
+            int sq = i * i;
+            if (canPartition(String.valueOf(sq), i, 0)) {
+                punishmentNumber += sq;
+            }
+        }
+        return punishmentNumber;
+    }
+
+    private boolean canPartition(String s, int target, int currentSum) {
+        if (currentSum > target) {
+            return false;
+        }
+        if (currentSum == target && s.isEmpty()) {
+            return true;
+        }
+
+        for (int i = 1; i <= s.length(); i++) {
+            int num = Integer.parseInt(s.substring(0, i));
+            if (canPartition(s.substring(i), target, currentSum + num)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
