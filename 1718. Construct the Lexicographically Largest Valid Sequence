@@ -1,0 +1,49 @@
+class Solution {
+    public boolean backtrack(int index, int[] ans, boolean[] used, int n) {
+        if (index == ans.length) {
+            return true;
+        }
+
+        if (ans[index] != 0) {
+            return backtrack(index + 1, ans, used, n);
+        }
+
+        for (int num = n; num >= 1; num--) {
+            if (used[num]) {
+                continue;
+            }
+
+            int secondIndex;
+            if (num == 1) {
+                secondIndex = index;
+            } else {
+                secondIndex = index + num;
+            }
+
+            if (secondIndex < ans.length && ans[secondIndex] == 0) {
+                ans[index] = num;
+                ans[secondIndex] = num;
+                used[num] = true;
+
+                if (backtrack(index + 1, ans, used, n)) {
+                    return true;
+                }
+
+                ans[index] = 0;
+                ans[secondIndex] = 0;
+                used[num] = false;
+            }
+        }
+        return false;
+    }
+
+    public int[] constructDistancedSequence(int n) {
+        int size = 2 * n - 1;
+        int[] ans = new int[size];
+        boolean[] used = new boolean[n + 1];
+
+        backtrack(0, ans, used, n);
+
+        return ans;
+    }
+}
