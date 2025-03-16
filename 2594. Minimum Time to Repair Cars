@@ -1,0 +1,28 @@
+class Solution {
+    public long repairCars(int[] ranks, int cars) {
+        long low = 1;
+        long high = (long) ranks[0] * cars * cars;
+        for (int rank : ranks) {
+            high = Math.min(high, (long) rank * cars * cars);
+        }
+        long ans = high;
+        while (low <= high) {
+            long mid = low + (high - low) / 2;
+            if (canRepairInTime(ranks, cars, mid)) {
+                ans = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return ans;
+    }
+
+    private boolean canRepairInTime(int[] ranks, int cars, long time) {
+        long repairedCars = 0;
+        for (int rank : ranks) {
+            repairedCars += Math.sqrt(time / rank);
+        }
+        return repairedCars >= cars;
+    }
+}
