@@ -1,0 +1,40 @@
+class Solution {
+    public int[] findXSum(int[] nums, int k, int x) {
+        int n = nums.length;
+        int[] answer = new int[n - k + 1];
+        int[] freq = new int[51]; // frequency map since nums[i] ≤ 50
+
+        for (int i = 0; i < k; i++) {
+            freq[nums[i]]++;
+        }
+        java.util.function.Supplier<Integer> computeXSum = () -> {
+            List<int[]> list = new ArrayList<>();
+            for (int num = 1; num <= 50; num++) {
+                if (freq[num] > 0) {
+                    list.add(new int[] { num, freq[num] });
+                }
+            }
+            list.sort((a, b) -> {
+                if (b[1] != a[1])
+                    return b[1] - a[1];
+                return b[0] - a[0];
+            });
+
+            int sum = 0;
+            for (int i = 0; i < list.size() && i < x; i++) {
+                sum += list.get(i)[0] * list.get(i)[1];
+            }
+            return sum;
+        };
+        answer[0] = computeXSum.get();
+
+        // Slide the window
+        for (int i = k; i < n; i++) {
+            freq[nums[i - k]]--; // remove outgoing element
+            freq[nums[i]]++; // add incoming element
+            answer[i - k + 1] = computeXSum.get();
+        }
+
+        return answer;
+    }
+}
