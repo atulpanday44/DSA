@@ -1,0 +1,34 @@
+class Solution {
+    public int countPalindromicSubsequence(String s) {
+        int n = s.length();
+
+        int[] first = new int[26];
+        int[] last = new int[26];
+
+        Arrays.fill(first, -1);
+        Arrays.fill(last, -1);
+
+        for (int i = 0; i < n; i++) {
+            int idx = s.charAt(i) - 'a';
+            if (first[idx] == -1) {
+                first[idx] = i;
+            }
+            last[idx] = i;
+        }
+
+        int result = 0;
+
+        for (int c = 0; c < 26; c++) {
+            if (first[c] != -1 && first[c] < last[c]) {
+                // unique middle chars between first and last occurrence
+                HashSet<Character> mid = new HashSet<>();
+                for (int i = first[c] + 1; i < last[c]; i++) {
+                    mid.add(s.charAt(i));
+                }
+                result += mid.size();
+            }
+        }
+
+        return result;
+    }
+}
